@@ -142,6 +142,19 @@ void Fix_initial_integrate(System& system, unsigned int step)
 
 /* ----------------------------------------------------------------------------------------------------------- */
 
+void Fix_post_integrate(System& system, unsigned int step) 
+{
+    auto& enabledFixRegistry = getEnabledFixRegistry();  
+
+    for (const auto& it : enabledFixRegistry) 
+    {
+        const std::unique_ptr<Fix>& fixInstance = it.second;
+        fixInstance->post_integrate(system, step);
+    }
+}
+
+/* ----------------------------------------------------------------------------------------------------------- */
+
 void Fix_final_integrate(System& system, unsigned int step) 
 {
     auto& enabledFixRegistry = getEnabledFixRegistry();  

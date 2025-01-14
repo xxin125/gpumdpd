@@ -19,6 +19,7 @@ public:
     virtual void postprocess(System& system) {};
 
     virtual void initial_integrate(System& system, unsigned int step) {};
+    virtual void post_integrate(System& system, unsigned int step) {};
     virtual void final_integrate(System& system, unsigned int step) {};
     virtual void post_force(System& system, unsigned int step) {};
     virtual void end_of_step(System& system, unsigned int step) {};
@@ -42,6 +43,7 @@ void preprocessFixes(System& system);
 void postprocessFixes(System& system);
 
 void Fix_initial_integrate(System& system, unsigned int step);
+void Fix_post_integrate(System& system, unsigned int step);
 void Fix_final_integrate(System& system, unsigned int step);
 void Fix_post_force(System& system, unsigned int step);
 void Fix_end_of_step(System& system, unsigned int step);
