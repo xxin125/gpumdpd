@@ -253,6 +253,7 @@ void simulation(
         /* ---------------------------------------- */
 
         Fix_initial_integrate(system, step);
+        Fix_post_integrate(system, step);
 
         /* ---------------------------------------- */
 
