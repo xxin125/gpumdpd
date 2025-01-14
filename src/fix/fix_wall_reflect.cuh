@@ -9,12 +9,12 @@ public:
     std::string getName() override;
 
     void preprocess(System& system) override;
-    
+
     void post_integrate(System& system, unsigned int step) override;
 
 private: 
 
-    int wall_side;
     int wall_direction;
-    numtyp  wall_pos;
+    numtyp  lo_wall_pos;
+    numtyp  hi_wall_pos;
 };
