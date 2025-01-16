@@ -21,7 +21,7 @@ private:
     numtyp rc;
     unsigned int seed;
 
-    // pair_coeff typei typej A gamma
+    // pair_coeff typei typej A gamma rc
 
     std::vector<numtyp> pair_coeff;
 
