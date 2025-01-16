@@ -345,7 +345,7 @@ static __global__ void kernel_dpd_force_log
 
             /* ----------------------------------------------- */
 
-            // MDPD forces computation
+            // DPD forces computation
 
             numtyp fpair = (A_ij * wc);
             fpair       -= (gamma_ij * wr * wr * dot * r_inv);
@@ -521,7 +521,7 @@ static __global__ void kernel_dpd_force
 
             /* ----------------------------------------------- */
 
-            // MDPD forces computation
+            // DPD forces computation
 
             numtyp fpair = (A_ij * wc);
             fpair       -= (gamma_ij * wr * wr * dot * r_inv);
