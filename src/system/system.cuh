@@ -40,7 +40,6 @@ struct Atoms
 
     /* ------------------------- */
 
-    int                 *d_mol_id;
     int                 *d_bondlist;
     int                 *d_anglelist;
     numtyp              *d_bond_pe;

@@ -169,7 +169,6 @@ void bonds_mem_free(System& system)
 
     /* ------------------------------------------------------- */
 
-    CUDA_CHECK(cudaFree(atoms.d_mol_id));
     CUDA_CHECK(cudaFree(atoms.d_bondlist));
     CUDA_CHECK(cudaFree(atoms.d_bond_pe));
 
