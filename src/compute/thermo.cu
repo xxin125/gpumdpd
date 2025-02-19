@@ -298,8 +298,9 @@ void Thermo::compute_temp(System& system)
 
     numtyp total_ke = (numtyp)0.0;
     CUDA_CHECK(cudaMemcpy(&total_ke, thermo_p.d_total_ke, sizeof(numtyp), cudaMemcpyDeviceToHost));
-
-    thermo_p.thermo_temp = (2 * total_ke) / (3 * system.n_atoms * 1);
+    numtyp n_dof = 3 * system.n_atoms - 3;
+    numtyp kb    = 1.0;
+    thermo_p.thermo_temp = (2 * total_ke) / (n_dof * kb);
 
     /* -------------------------------------------------------- */
 }

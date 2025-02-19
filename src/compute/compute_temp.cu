@@ -159,7 +159,10 @@ void temp::compute(System& system, unsigned int step)
 
     numtyp total_ke = (numtyp)0.0;
     CUDA_CHECK(cudaMemcpy(&total_ke, d_ctemp, sizeof(numtyp), cudaMemcpyDeviceToHost));
-    numtyp temp = (2 * total_ke) / (3 * n_gatoms * 1);
+
+    numtyp n_dof = 3 * n_gatoms - 3;
+    numtyp kb    = 1.0;
+    numtyp temp  = (2 * total_ke) / (n_dof * kb);
 
     /* ------------------------------------------------------- */
 
