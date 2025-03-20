@@ -335,10 +335,6 @@ void postprocess(
         angles_mem_free(system);
     }
 
-    if (system.run_p.exclude_nl == 1) {
-        exclude_mem_free(system);
-    }    
-
     /* ---------------------------------------- */
 
     neigh_list.postprocess(system);
