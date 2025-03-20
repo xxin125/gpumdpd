@@ -332,10 +332,6 @@ void spring::post_force(System& system, unsigned int step)
     numtyp dx = h_t_mx - spring_x;
     numtyp dy = h_t_my - spring_y;
     numtyp dz = h_t_mz - spring_z;
-
-    dx = dx - box.lx * ((dx >= box.hlx) - (dx < -box.hlx));
-    dy = dy - box.ly * ((dy >= box.hly) - (dy < -box.hly));
-    dz = dz - box.lz * ((dz >= box.hlz) - (dz < -box.hlz));
     const numtyp r2 = dx * dx + dy * dy + dz * dz;
     numtyp r = sqrt(r2);
 
