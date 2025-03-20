@@ -188,6 +188,10 @@ void zero_step(
 
     /* ---------------------------------------- */
 
+    Fix_post_force(system, 0);
+
+    /* ---------------------------------------- */
+
     thermo.process(system, 0);
     Compute_compute(system, 0);
 
@@ -330,6 +334,10 @@ void postprocess(
         bonds_mem_free(system);
         angles_mem_free(system);
     }
+
+    if (system.run_p.exclude_nl == 1) {
+        exclude_mem_free(system);
+    }    
 
     /* ---------------------------------------- */
 
