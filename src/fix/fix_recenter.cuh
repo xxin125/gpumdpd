@@ -11,7 +11,7 @@ public:
     void preprocess(System& system) override;
     void postprocess(System& system) override;
 
-    void initial_integrate(System& system, unsigned int step) override;
+    void end_of_step(System& system, unsigned int step) override;
 
 private: 
     int frequency;

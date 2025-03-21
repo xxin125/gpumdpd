@@ -267,7 +267,7 @@ static __global__ void kernel_recenter
 
 /* ----------------------------------------------------------------------------------------------------------- */
 
-void recenter::initial_integrate(System& system, unsigned int step) 
+void recenter::end_of_step(System& system, unsigned int step) 
 {
     /* ------------------------------------------------------- */
 
@@ -311,16 +311,6 @@ void recenter::initial_integrate(System& system, unsigned int step)
     h_t_mx = h_t_mx / h_t_m;
     h_t_my = h_t_my / h_t_m;
     h_t_mz = h_t_mz / h_t_m;
-
-    while (h_t_mx >= box.xhi || h_t_mx < box.xlo) {
-        h_t_mx -= box.lx * ((h_t_mx >= box.xhi) - (h_t_mx < box.xlo));
-    }
-    while (h_t_my >= box.yhi || h_t_my < box.ylo) {
-        h_t_my -= box.ly * ((h_t_my >= box.yhi) - (h_t_my < box.ylo));
-    }
-    while (h_t_mz >= box.zhi || h_t_mz < box.zlo) {
-        h_t_mz -= box.lz * ((h_t_mz >= box.zhi) - (h_t_mz < box.zlo));
-    }
 
     /* ------------------------------------------------------- */
 
