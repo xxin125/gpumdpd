@@ -207,22 +207,22 @@ static __global__ void kernel_spring_com
 
     /* ------------------------------------------------------- */
 
-    numtyp p_mvx = (numtyp)0.0;
-    numtyp p_mvy = (numtyp)0.0;
-    numtyp p_mvz = (numtyp)0.0;
+    numtyp p_mx = (numtyp)0.0;
+    numtyp p_my = (numtyp)0.0;
+    numtyp p_mz = (numtyp)0.0;
 
     if (i < n_gatoms)
     {
         int atom_index = g_atoms[i];
         numtyp mass_i = masses[d_type[atom_index]-1];
-        p_mvx = mass_i*d_uwpos[atom_index*3+0];
-        p_mvy = mass_i*d_uwpos[atom_index*3+1];
-        p_mvz = mass_i*d_uwpos[atom_index*3+2];
+        p_mx = mass_i*d_uwpos[atom_index*3+0];
+        p_my = mass_i*d_uwpos[atom_index*3+1];
+        p_mz = mass_i*d_uwpos[atom_index*3+2];
     }
 
-    sdatamx[tid] = p_mvx;
-    sdatamy[tid] = p_mvy;
-    sdatamz[tid] = p_mvz;
+    sdatamx[tid] = p_mx;
+    sdatamy[tid] = p_my;
+    sdatamz[tid] = p_mz;
     __syncthreads();
 
     /* ------------------------------------------------------- */
@@ -282,7 +282,6 @@ void spring::post_force(System& system, unsigned int step)
 {
     /* ------------------------------------------------------- */
 
-    Box& box     = system.box;
     Group& group = find_group(system, this->group_id);
     Atoms& atoms = system.atoms;
     int n_gatoms = group.n_atoms;
@@ -316,17 +315,7 @@ void spring::post_force(System& system, unsigned int step)
     h_t_mx = h_t_mx / h_t_m;
     h_t_my = h_t_my / h_t_m;
     h_t_mz = h_t_mz / h_t_m;
-
-    while (h_t_mx >= box.xhi || h_t_mx < box.xlo) {
-        h_t_mx -= box.lx * ((h_t_mx >= box.xhi) - (h_t_mx < box.xlo));
-    }
-    while (h_t_my >= box.yhi || h_t_my < box.ylo) {
-        h_t_my -= box.ly * ((h_t_my >= box.yhi) - (h_t_my < box.ylo));
-    }
-    while (h_t_mz >= box.zhi || h_t_mz < box.zlo) {
-        h_t_mz -= box.lz * ((h_t_mz >= box.zhi) - (h_t_mz < box.zlo));
-    }
-
+    
     /* ------------------------------------------------------- */
 
     numtyp dx = h_t_mx - spring_x;
