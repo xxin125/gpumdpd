@@ -106,7 +106,7 @@ void rvcm::preprocess(System& system)
     int blockSize    = 128;
     int numBlocks    = (n_gatoms + blockSize - 1) / blockSize;
 
-    CUDA_CHECK(cudaMemset(t_m, (numtyp)0.0, sizeof(numtyp)));
+    CUDA_CHECK(cudaMemset(t_m, 0, sizeof(numtyp)));
 
     kernel_tm<<<numBlocks, blockSize>>>
     (
@@ -247,9 +247,9 @@ void rvcm::end_of_step(System& system, unsigned int step)
     int blockSize    = 128;
     int numBlocks    = (n_gatoms + blockSize - 1) / blockSize;
 
-    CUDA_CHECK(cudaMemset(t_mvx, (numtyp)0.0, sizeof(numtyp)));
-    CUDA_CHECK(cudaMemset(t_mvy, (numtyp)0.0, sizeof(numtyp)));
-    CUDA_CHECK(cudaMemset(t_mvz, (numtyp)0.0, sizeof(numtyp)));
+    CUDA_CHECK(cudaMemset(t_mvx, 0, sizeof(numtyp)));
+    CUDA_CHECK(cudaMemset(t_mvy, 0, sizeof(numtyp)));
+    CUDA_CHECK(cudaMemset(t_mvz, 0, sizeof(numtyp)));
 
     kernel_vcm<<<numBlocks, blockSize>>>
     (

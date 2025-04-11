@@ -452,7 +452,7 @@ void Neigh_list::build(System& system)
     // Build neighbor list
 
     CUDA_CHECK(cudaMemset(atoms.d_n_neigh,  0, sizeof(int)*N));   
-    CUDA_CHECK(cudaMemset(atoms.d_neigh,   -1, sizeof(int)*N*n_max_neigh)); 
+    CUDA_CHECK(deviceFill<int>(atoms.d_neigh, -1, N * n_max_neigh));
 
     int threadsPerBin = 16;
     int BinsPerBlock  = blockSize / threadsPerBin;

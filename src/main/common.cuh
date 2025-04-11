@@ -296,3 +296,21 @@ inline T parse_int(const std::string& token, const std::string& line, const std:
 }
 
 /* ----------------------------------------------------------------------------------------------------------- */
+
+template <typename T>
+__global__ void fillKernel(T* arr, T value, size_t N) {
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    if (idx < N) {
+        arr[idx] = value;
+    }
+}
+
+template <typename T>
+cudaError_t deviceFill(T* d_arr, T value, size_t N) {
+    int threadsPerBlock = 256;
+    int blocksPerGrid = (N + threadsPerBlock - 1) / threadsPerBlock;
+    fillKernel<T><<<blocksPerGrid, threadsPerBlock>>>(d_arr, value, N);
+    return cudaGetLastError();
+}
+
+/* ----------------------------------------------------------------------------------------------------------- */

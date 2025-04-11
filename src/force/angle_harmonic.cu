@@ -480,7 +480,7 @@ void Angle_harmonic::compute_force(System& system, unsigned int step)
 
     if (log)
     {
-        CUDA_CHECK(cudaMemset(atoms.d_angle_pe, (numtyp)0.0, sizeof(numtyp)*N));
+        CUDA_CHECK(cudaMemset(atoms.d_angle_pe, 0, sizeof(numtyp)*N));
         kernel_angle_harmonic_log<<<numBlocks, blockSize>>>
         (
             N,                                  

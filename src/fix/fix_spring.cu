@@ -149,7 +149,7 @@ void spring::preprocess(System& system)
     int blockSize    = 128;
     int numBlocks    = (n_gatoms + blockSize - 1) / blockSize;
 
-    CUDA_CHECK(cudaMemset(t_m, (numtyp)0.0, sizeof(numtyp)));
+    CUDA_CHECK(cudaMemset(t_m, 0, sizeof(numtyp)));
 
     kernel_tm<<<numBlocks, blockSize>>>
     (
@@ -291,9 +291,9 @@ void spring::post_force(System& system, unsigned int step)
     int blockSize    = 128;
     int numBlocks    = (n_gatoms + blockSize - 1) / blockSize;
 
-    CUDA_CHECK(cudaMemset(t_mx, (numtyp)0.0, sizeof(numtyp)));
-    CUDA_CHECK(cudaMemset(t_my, (numtyp)0.0, sizeof(numtyp)));
-    CUDA_CHECK(cudaMemset(t_mz, (numtyp)0.0, sizeof(numtyp)));
+    CUDA_CHECK(cudaMemset(t_mx, 0, sizeof(numtyp)));
+    CUDA_CHECK(cudaMemset(t_my, 0, sizeof(numtyp)));
+    CUDA_CHECK(cudaMemset(t_mz, 0, sizeof(numtyp)));
 
     kernel_spring_com<<<numBlocks, blockSize>>>
     (

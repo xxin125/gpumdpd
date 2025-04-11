@@ -132,7 +132,7 @@ void bonds_mem_alloc(System& system)
     CUDA_CHECK(cudaMalloc(&atoms.d_bondlist,  N * 3 * sizeof(int)));
     CUDA_CHECK(cudaMalloc(&atoms.d_bond_pe,   N   *   sizeof(numtyp))); 
 
-    CUDA_CHECK(cudaMemset(atoms.d_bondlist,  -1,  N * 3 * sizeof(int)));
+    CUDA_CHECK(deviceFill<int>(atoms.d_bondlist, -1, N * 3));
     CUDA_CHECK(cudaMemset(atoms.d_bond_pe,    0,  N   *   sizeof(numtyp)));
     
     /* ------------------------------------------------------- */
@@ -189,7 +189,7 @@ void angles_mem_alloc(System& system)
     CUDA_CHECK(cudaMalloc(&atoms.d_anglelist,  N * 4 * sizeof(int)));
     CUDA_CHECK(cudaMalloc(&atoms.d_angle_pe,   N   *   sizeof(numtyp))); 
 
-    CUDA_CHECK(cudaMemset(atoms.d_anglelist,  -1,  N * 4 * sizeof(int)));
+    CUDA_CHECK(deviceFill<int>(atoms.d_anglelist, -1, N * 4));
     CUDA_CHECK(cudaMemset(atoms.d_angle_pe,    0,  N   *   sizeof(numtyp)));
     
     /* ------------------------------------------------------- */
@@ -315,7 +315,7 @@ void group_mem_alloc(Group& group, int n_atoms)
     CUDA_CHECK(cudaMemcpy(group.d_types,    group.h_types.data(), group.h_types.size() * sizeof(int), cudaMemcpyHostToDevice));
     
     CUDA_CHECK(cudaMemset(group.d_n_atoms,   0,  sizeof(int)));
-    CUDA_CHECK(cudaMemset(group.d_atoms,    -1,  n_atoms * sizeof(int)));
+    CUDA_CHECK(deviceFill<int>(group.d_atoms, -1, n_atoms));
 }
 
 /* -------------------------------------------------------------------------------------- */

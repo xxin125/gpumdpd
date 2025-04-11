@@ -376,7 +376,7 @@ void Bond_harmonic::compute_force(System& system, unsigned int step)
 
     if (log)
     {
-        CUDA_CHECK(cudaMemset(atoms.d_bond_pe, (numtyp)0.0, sizeof(numtyp)*N));
+        CUDA_CHECK(cudaMemset(atoms.d_bond_pe, 0, sizeof(numtyp)*N));
         kernel_bond_harmonic_log<<<numBlocks, blockSize>>>
         (
             N,                                  

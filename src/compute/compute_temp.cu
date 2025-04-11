@@ -143,7 +143,7 @@ void temp::compute(System& system, unsigned int step)
 
     /* ------------------------------------------------------- */
 
-    CUDA_CHECK(cudaMemset(d_ctemp, 0.0, sizeof(numtyp)));
+    CUDA_CHECK(cudaMemset(d_ctemp, 0, sizeof(numtyp)));
 
     int blockSize    = 128;
     int numBlocks    = (n_gatoms + blockSize - 1) / blockSize;

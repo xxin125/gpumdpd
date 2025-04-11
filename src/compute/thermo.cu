@@ -280,7 +280,7 @@ void Thermo::compute_temp(System& system)
 
     /* -------------------------------------------------------- */
 
-    CUDA_CHECK(cudaMemset(thermo_p.d_total_ke, (numtyp)0.0, sizeof(numtyp)));
+    CUDA_CHECK(cudaMemset(thermo_p.d_total_ke, 0, sizeof(numtyp)));
 
     int N           = system.n_atoms;
     int blockSize   = 128;
@@ -363,7 +363,7 @@ void Thermo::compute_pe(System& system)
 
     /* -------------------------------------------------------- */
 
-    CUDA_CHECK(cudaMemset(thermo_p.d_total_pair_pe, (numtyp)0.0, sizeof(numtyp)));
+    CUDA_CHECK(cudaMemset(thermo_p.d_total_pair_pe, 0, sizeof(numtyp)));
 
     int N           = system.n_atoms;
     int blockSize   = 128;
@@ -486,7 +486,7 @@ void Thermo::compute_pressure(System& system)
 
     /* -------------------------------------------------------- */
 
-    CUDA_CHECK(cudaMemset(thermo_p.d_pressure_tensor, (numtyp)0.0, sizeof(numtyp)*6));
+    CUDA_CHECK(cudaMemset(thermo_p.d_pressure_tensor, 0, sizeof(numtyp)*6));
 
     int N           = system.n_atoms;
     int blockSize   = 128;
@@ -577,7 +577,7 @@ void Thermo::compute_bond_pe(System& system)
 
     /* -------------------------------------------------------- */
 
-    CUDA_CHECK(cudaMemset(thermo_p.d_total_bond_pe, (numtyp)0.0, sizeof(numtyp)));
+    CUDA_CHECK(cudaMemset(thermo_p.d_total_bond_pe, 0, sizeof(numtyp)));
 
     int N           = system.n_bonds;
     int blockSize   = 128;
@@ -658,7 +658,7 @@ void Thermo::compute_angle_pe(System& system)
 
     /* -------------------------------------------------------- */
 
-    CUDA_CHECK(cudaMemset(thermo_p.d_total_angle_pe, (numtyp)0.0, sizeof(numtyp)));
+    CUDA_CHECK(cudaMemset(thermo_p.d_total_angle_pe, 0, sizeof(numtyp)));
 
     int N           = system.n_angles;
     int blockSize   = 128;

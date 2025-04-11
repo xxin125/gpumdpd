@@ -581,9 +581,9 @@ void Pair_dpd::compute_force(System& system, unsigned int step)
 
     if (step % run_p.log_f == 0) 
     {
-        CUDA_CHECK(cudaMemsetAsync(atoms.d_force, 0.0, sizeof(numtyp)*N*3));
-        CUDA_CHECK(cudaMemsetAsync(atoms.d_pe,    0.0, sizeof(numtyp)*N));
-        CUDA_CHECK(cudaMemsetAsync(atoms.d_viral, 0.0, sizeof(numtyp)*N*6));
+        CUDA_CHECK(cudaMemset(atoms.d_force, 0, sizeof(numtyp)*N*3));
+        CUDA_CHECK(cudaMemset(atoms.d_pe,    0, sizeof(numtyp)*N));
+        CUDA_CHECK(cudaMemset(atoms.d_viral, 0, sizeof(numtyp)*N*6));
 
         int blockSize = 256;
         int threadsPerParticle = 8;
@@ -608,7 +608,7 @@ void Pair_dpd::compute_force(System& system, unsigned int step)
 
     else 
     {
-        CUDA_CHECK(cudaMemsetAsync(atoms.d_force, 0.0, sizeof(numtyp)*N*3));
+        CUDA_CHECK(cudaMemset(atoms.d_force, 0, sizeof(numtyp)*N*3));
 
         int blockSize = 256;
         int threadsPerParticle = 8;

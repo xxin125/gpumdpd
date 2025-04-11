@@ -149,7 +149,7 @@ void msd::compute(System& system, unsigned int step)
 
     /* ------------------------------------------------------- */
 
-    CUDA_CHECK(cudaMemset(d_msd, (numtyp)0.0, sizeof(numtyp)));
+    CUDA_CHECK(cudaMemset(d_msd, 0, sizeof(numtyp)));
 
     int blockSize    = 128;
     int numBlocks    = (g_natoms + blockSize - 1) / blockSize;

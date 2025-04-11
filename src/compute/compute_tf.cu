@@ -152,7 +152,7 @@ void tf::compute(System& system, unsigned int step)
 
     /* ------------------------------------------------------- */
 
-    CUDA_CHECK(cudaMemset(d_tf, (numtyp)0.0, sizeof(numtyp) * 3));
+    CUDA_CHECK(cudaMemset(d_tf, 0, sizeof(numtyp) * 3));
 
     int blockSize    = 128;
     int numBlocks    = (n_gatoms + blockSize - 1) / blockSize;

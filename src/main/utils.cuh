@@ -387,4 +387,3 @@ void print_performance(System& system, const std::chrono::steady_clock::time_poi
 }
 
 /* ----------------------------------------------------------------------------------------------------------- */
-
