@@ -1,5 +1,7 @@
 #include "force/pair_mdpd.cuh"
 
+#define PI 3.14159265358979323846
+
 /* ----------------------------------------------------------------------------------------------------------- */
 
 Pair_mdpd::Pair_mdpd() 
@@ -270,7 +272,7 @@ static __global__ void kernel_local_density
         int t_j = max(type_i, type_j);
         const int index  = ((t_i - 1) * n_atomtypes - (t_i - 1) * (t_i - 2) / 2 + t_j - t_i + 1) - 1;
         const numtyp rd = gpu_pair_coeff[index*5+4];
-        const numtyp pi_value = (numtyp)3.141592654;
+        const numtyp pi_value = (numtyp)PI;
         const numtyp factor   = (numtyp)15.0/(numtyp)2.0/pi_value/(rd*rd*rd);
 
         /* --------------------------------------------------- */
@@ -473,9 +475,14 @@ __global__ void kernel_mdpd_force_log
             fz += ffz;
 
             /* ----------------------------------------------- */
+            
+            const numtyp u_c   = (numtyp)0.5 * A_ij * rc * wc * wc;
+            const numtyp u_d_i = (numtyp)0.25 * B_ij * rd * (rho_i) * wd * wd;
+            const numtyp u_d_j = (numtyp)0.25 * B_ij * rd * (rho_j) * wd * wd;
 
-            const numtyp ppe = ((numtyp)0.5 * A_ij * rc * wc * wc + (numtyp)0.25 * B_ij * rd * (rho_i + rho_j) * wd * wd);
-            pe += ppe;
+            const numtyp ppe_i = 0.5 * u_c + u_d_i;
+            const numtyp ppe_j = 0.5 * u_c + u_d_j;
+            pe += ppe_i;
 
             /* ----------------------------------------------- */
 
@@ -500,7 +507,7 @@ __global__ void kernel_mdpd_force_log
                 atomicAdd(&d_force[j*3+0], -ffx);
                 atomicAdd(&d_force[j*3+1], -ffy);
                 atomicAdd(&d_force[j*3+2], -ffz);
-                atomicAdd(&d_pe[i], (numtyp)0.5*ppe);
+                atomicAdd(&d_pe[j], ppe_j);
                 atomicAdd(&d_viral[j*6+0], vvirxx);
                 atomicAdd(&d_viral[j*6+1], vvirxy);
                 atomicAdd(&d_viral[j*6+2], vvirxz);
@@ -518,7 +525,7 @@ __global__ void kernel_mdpd_force_log
     atomicAdd(&d_force[i*3+0], fx);
     atomicAdd(&d_force[i*3+1], fy);
     atomicAdd(&d_force[i*3+2], fz);
-    atomicAdd(&d_pe[i], (numtyp)0.5*pe);
+    atomicAdd(&d_pe[i], pe);
     atomicAdd(&d_viral[i*6+0], virxx);
     atomicAdd(&d_viral[i*6+1], virxy);
     atomicAdd(&d_viral[i*6+2], virxz);

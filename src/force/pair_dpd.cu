@@ -389,7 +389,7 @@ static __global__ void kernel_dpd_force_log
                 atomicAdd(&d_force[j*3+0], -ffx);
                 atomicAdd(&d_force[j*3+1], -ffy);
                 atomicAdd(&d_force[j*3+2], -ffz);
-                atomicAdd(&d_pe[i], (numtyp)0.5*ppe);
+                atomicAdd(&d_pe[j], (numtyp)0.5*ppe);
                 atomicAdd(&d_viral[j*6+0], vvirxx);
                 atomicAdd(&d_viral[j*6+1], vvirxy);
                 atomicAdd(&d_viral[j*6+2], vvirxz);
