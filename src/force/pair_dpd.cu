@@ -293,7 +293,7 @@ static __global__ void kernel_dpd_force_log
     {
         /* --------------------------------------------------- */
 
-        const int j = d_neigh[i * n_max_neigh + k];
+        const int j = d_neigh[k * N + i];
         numtyp dx = x_i - d_pos[j*3+0];
         numtyp dy = y_i - d_pos[j*3+1];
         numtyp dz = z_i - d_pos[j*3+2];
@@ -469,7 +469,7 @@ static __global__ void kernel_dpd_force
     {
         /* --------------------------------------------------- */
 
-        const int j = d_neigh[i * n_max_neigh + k];
+        const int j = d_neigh[k * N + i];
         numtyp dx = x_i - d_pos[j*3+0];
         numtyp dy = y_i - d_pos[j*3+1];
         numtyp dz = z_i - d_pos[j*3+2];

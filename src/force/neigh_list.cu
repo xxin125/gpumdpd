@@ -321,7 +321,7 @@ static __global__ void kernel_assignAtomsToBins
 
 static __global__ void kernel_build
 (
-    const int nbins,       
+    const int nbins,            const int N,
     const int *binCounts,       const int *binCounts_prefix_sum,   const int *binContent,
     const int *neighborbinsID,  const numtyp bin_size,             const numtyp *d_pos, 
     const int n_max_neigh,      int *d_n_neigh,                    int *d_neigh, 
@@ -381,7 +381,7 @@ static __global__ void kernel_build
 
                 if (r2 <= bin_size * bin_size) 
                 {
-                    d_neigh[i * n_max_neigh + count] = neighborAtomID;
+                    d_neigh[count * N + i] = neighborAtomID;
                     count += 1;
                 } 
             }
@@ -460,7 +460,7 @@ void Neigh_list::build(System& system)
 
     kernel_build<<<numBlocks,blockSize>>>
     (
-        neigh.n_totalbins,       
+        neigh.n_totalbins,       N,
         neigh.binCounts,         neigh.binCounts_prefix_sum,    neigh.binContent,      
         neigh.d_neighborbinsID,  neigh.bin_size,                atoms.d_pos,
         system.n_max_neigh,      atoms.d_n_neigh,               atoms.d_neigh,

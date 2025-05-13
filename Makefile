@@ -15,14 +15,14 @@ BINDIR = .
 CUSOURCES = $(wildcard $(SRCDIR)/*/*.cu)
 CUOBJECTS = $(patsubst $(SRCDIR)/%,$(OBJDIR)/%,$(CUSOURCES:.cu=.o))
 
-all: directories run
+all: directories gpudpd
 
 # Create the necessary directories
 directories:
 	@mkdir -p $(OBJDIR)
 
-run: $(CUOBJECTS)
-	$(NVCC) $(NVCCFLAGS) $^ -o $(BINDIR)/run
+gpudpd: $(CUOBJECTS)
+	$(NVCC) $(NVCCFLAGS) $^ -o $(BINDIR)/gpudpd
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.cu
 	@mkdir -p $(@D)
@@ -30,4 +30,4 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.cu
 
 clean:
 	rm -rf $(OBJDIR)/*
-	rm -f $(BINDIR)/run
+	rm -f $(BINDIR)/gpudpd
